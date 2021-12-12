@@ -1,10 +1,53 @@
+header {
+  display: flex;
+}
+
+ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+a {
+  color: rgb(0, 0, 160);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .btn {
-  width: 80px;
+  width: 130px;
   height: 35px;
 
   margin-top: 20px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+
+  border: 1px solid #000;
+  border-radius: 5px;
+
+  background-color: rgb(167, 167, 167);
+
+  font-weight: 600;
 }
 
-.buscaCep {
-  font-size: 24px;
+.formCep {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 18px;
+}
+
+select {
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+input, select {
+  width: 200px;
+  height: 35px;
+  
+  border: 1px solid rgb(163, 163, 163);
+  border-radius: 5px;
 }

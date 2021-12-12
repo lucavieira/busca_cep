@@ -1,36 +1,54 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 
-import Cep from './components/cep';
+import BemVindo from './components/BemVindo'
+import BuscaEndereco from './components/BuscaEndereco'
+import BuscaCep from './components/BuscaCep'
+
 
 import './App.css'
 
-function App () {
-  const [cep, setCep] = useState();
-  const [info, setInfo] = useState({
-    cep: '',
-    bairro: ''
-  });
+function App() {
 
-  const getResponse = () => {
-    axios.get('http://viacep.com.br/ws/' + cep + '/json/').then(response => {
-      setInfo(response.data);
-    });
-  }
+  const [busca, setBusca] = useState('bemVindo')
 
-  const search = (e) => {
-    if(e.target.getAttribute('name') == 'cep') {
-      setCep(e.target.value)
+  useEffect(() => {
+    let firstButton = document.getElementById('btn1')
+    let secondButton = document.getElementById('btn2')
+
+    if(busca === 'endereco') {
+      firstButton.value = 'Voltar'
+      firstButton.onclick = () => {setBusca('bemVindo')}
+      secondButton.style.opacity = 0
+      
+    }else if (busca === 'bemVindo') {
+      firstButton.value = 'Buscar Endereco'
+      firstButton.onclick = () => {setBusca('endereco')}
+      secondButton.style.opacity = 1
+    }else if (busca === 'cep') {
+      firstButton.value = 'Voltar'
+      firstButton.onclick = () => {setBusca('bemVindo')}
+      secondButton.style.opacity = 0
     }
-  }
+  })
 
   return (
     <>
-      <h2>Busca CEP</h2>
-      <label>Digite o CEP: </label><br />
-      <input type="text" name="cep" onChange={ (e) => { search(e) } } /><br />
-      <button className="btn" onClick={ getResponse }>Search</button>
-      { info['bairro'] != '' && info['cep'] != '' ? <Cep bairro = {info['bairro']} cep = {info['cep']} /> : <></>}
+    <header>
+        <p>
+          <strong>BuscaCEP</strong>
+        </p>
+        <ul>
+          <li>
+            <a onClick={() => {setBusca('cep')}}>Buscar Cep</a>
+          </li>
+          <li>
+            <a onClick={() => {setBusca('endereco')}}>Buscar Endereço</a>
+          </li>
+        </ul>
+      </header>
+      {busca === 'endereco' ? <BuscaEndereco /> : busca === 'cep' ? <BuscaCep /> : <BemVindo />}
+      <input type="button" id="btn1" className="btn" />
+      <input type="button" id="btn2" className="btn" value="Buscar CEP" onClick={() => {setBusca('cep')}}/>
     </>
   )
 }
